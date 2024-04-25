@@ -141,6 +141,18 @@ class Genius(API, PublicAPI):
                       "Please report this if the song has lyrics.\n"
                       "Song URL: https://genius.com/{}".format(path))
             return None
+        else:
+            rem = div.find("div", class_=re.compile("Lyrics__Footer"))
+            if rem:
+                rem.replace_with("")
+
+            header = div.find("h2", class_=re.compile("TextLabel"))
+            if header:
+                header.replace_with("")
+
+            controls = div.find("div", class_=re.compile("LyricsControls"))
+            if controls:
+                controls.replace_with("")
 
         lyrics = "\n".join([div.get_text() for div in divs])
 
